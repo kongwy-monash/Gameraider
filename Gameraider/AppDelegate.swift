@@ -7,14 +7,26 @@
 
 import UIKit
 import CoreData
+import Firebase
+import GoogleMaps
+import GooglePlaces
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    
+    var window: UIWindow?
+    var databaseController: DatabaseProtocol?
+    var persistantContainer: NSPersistentContainer?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        databaseController = FirebaseController()
+        persistantContainer = NSPersistentContainer(name: "ImageModel")
+        persistantContainer?.loadPersistentStores() { (description, error) in
+            if let error = error {
+                fatalError("Failed to load Core Data stack: \(error)")
+            }
+        }
         return true
     }
 
